@@ -17,7 +17,7 @@ def break_tables():
     html = html_file.read()
 
     # Retrieve tables
-    tables = get_tables(html)[:50]
+    tables = get_tables(html)[:]
 
     print("Creating tables object...")
     # Parse tables into dictionaries
@@ -27,14 +27,20 @@ def break_tables():
         
         obj = {}
         for span in spans:      
-            id = span.get('id')[18:]
+            id = span.get('id').split("_")[-1:][0][3:]
             text = span.get_text()
 
             obj[id] = text
-        
-        if 'DBE' in obj['LsdbeOptions']:
-            info.append(obj)
-
+            
+        try:
+            if 'DBE' in obj['LsdbeOptions']:
+                info.append(obj)
+        except KeyError as error:
+            print(id)
+            print(obj[id])
+    
+    print("Tables organized created and organized.")
+    print("Number of businesses: " + str(len(info)))
     return info
 
 if __name__ == "__main__":  
