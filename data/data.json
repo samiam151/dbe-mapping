@@ -82,7 +82,7 @@
         "BusinessAddress3": "WASHINGTON DC 20001",
         "BusinessEMail": "adahagam@adityassoc.com",
         "BusinessPhone": "(202) 505-1431",
-        "CompanyName": "A&A;",
+        "CompanyName": "A&A",
         "ContactName": "Aditya Dahagam",
         "LsdbeNumber": "LSDZR48331062018",
         "LsdbeOptions": "LBE, SBE, DBE, DZE, ROB"
@@ -93,7 +93,7 @@
         "BusinessAddress3": "WASHINGTON DC 200032831",
         "BusinessEMail": "aandeheatingandair@gmail",
         "BusinessPhone": "(202) 608-1348",
-        "CompanyName": "A&Eheating;&A;/C LLC",
+        "CompanyName": "A&Eheating&A/C LLC",
         "ContactName": "Andre Marr",
         "LsdbeNumber": "LSD84633072018",
         "LsdbeOptions": "LBE, SBE, DBE"
@@ -104,7 +104,7 @@
         "BusinessAddress3": "WASHINGTON DC 200364823",
         "BusinessEMail": "manastasi@af-engineers.com",
         "BusinessPhone": "(202) 628-1600",
-        "CompanyName": "A&F; Engineers, Inc.",
+        "CompanyName": "A&F Engineers, Inc.",
         "ContactName": "Myrofora Anastasi-Frantzis",
         "LsdbeNumber": "LSDZ20196092018",
         "LsdbeOptions": "LBE, SBE, DBE, DZE"
@@ -247,7 +247,7 @@
         "BusinessAddress3": "WASHINGTON DC 20011",
         "BusinessEMail": "aswailes@aapremiumpaintdistributor",
         "BusinessPhone": "(202) 409-5173",
-        "CompanyName": "ADSWAILES, LLC dba A&A; Premium Paint Distributors, LLC",
+        "CompanyName": "ADSWAILES, LLC dba A&A Premium Paint Distributors, LLC",
         "ContactName": "Alfred Swailes",
         "LsdbeNumber": "LSDR91711082018",
         "LsdbeOptions": "LBE, SBE, DBE, ROB"
@@ -786,7 +786,7 @@
         "BusinessAddress3": "WASHINGTON DC 20011",
         "BusinessEMail": "bayalew@bdandz.com",
         "BusinessPhone": "(202) 749-8335",
-        "CompanyName": "BD&Z; Associates LLC",
+        "CompanyName": "BD&Z Associates LLC",
         "ContactName": "Balehager Ayalew",
         "LsdbeNumber": "LSDR2174102018",
         "LsdbeOptions": "LBE, SBE, DBE, ROB"
@@ -812,6 +812,17 @@
         "ContactName": "Beverley Mitchell",
         "LsdbeNumber": "LSDRV95359052019",
         "LsdbeOptions": "LBE, SBE, DBE, ROB, VOB"
+    },
+    {
+        "BusinessAddress1": "1917 BENNING ROAD NE",
+        "BusinessAddress2": "",
+        "BusinessAddress3": "WASHINGTON DC 20002",
+        "BusinessEMail": "toyebello@bandbllc.com",
+        "BusinessPhone": "(202) 289-1663",
+        "CompanyName": "Bello, Bello & Associates LLC",
+        "ContactName": "Toye Bello",
+        "LsdbeNumber": "LSDZ80734102019",
+        "LsdbeOptions": "LBE, SBE, DBE, DZE"
     },
     {
         "BusinessAddress1": "4832 NANNIE HELEN BURROUGHS AVENUE NE",
@@ -2227,7 +2238,7 @@
         "BusinessAddress3": "WASHINGTON DC 20036",
         "BusinessEMail": "DMDC.Inc@gmail.com",
         "BusinessPhone": "(844) 200-3632",
-        "CompanyName": "DMD&C;",
+        "CompanyName": "DMD&C",
         "ContactName": "Manar Iqbalperbaksh PhD",
         "LsdbeNumber": "LSDR30751092019",
         "LsdbeOptions": "LBE, SBE, DBE, ROB"
@@ -2787,7 +2798,7 @@
         "BusinessAddress2": "",
         "BusinessAddress3": "WASHINGTON DC 20018",
         "BusinessEMail": "galaxyhcsinc@gmail.com",
-        "BusinessPhone": "(202) 262-3610",
+        "BusinessPhone": "(202) 609-9796",
         "CompanyName": "Galaxy Healthcare Solutions, Inc",
         "ContactName": "Theodore Ngatchou",
         "LsdbeNumber": "LSDR67486122016",
@@ -3910,7 +3921,7 @@
         "BusinessAddress3": "WASHINGTON DC 20009",
         "BusinessEMail": "mtanamor@LMpolicyresearch.com",
         "BusinessPhone": "(202) 506-6183",
-        "CompanyName": "L&M; Policy Research",
+        "CompanyName": "L&M Policy Research",
         "ContactName": "Myra Tanamor",
         "LsdbeNumber": "LSDZ69816032018",
         "LsdbeOptions": "LBE, SBE, DBE, DZE"
@@ -4879,7 +4890,7 @@
         "BusinessEMail": "hamilton@octane-inc.com",
         "BusinessPhone": "(202) 232-2211",
         "CompanyName": "Octane, LLC",
-        "ContactName": "Sheila McGee",
+        "ContactName": "Georgette Walker",
         "LsdbeNumber": "LSD55816022017",
         "LsdbeOptions": "LBE, SBE, DBE"
     },
@@ -6651,8 +6662,8 @@
         "BusinessPhone": "(202) 465-8111",
         "CompanyName": "Thoron Capital",
         "ContactName": "Robert Taylor",
-        "LsdbeNumber": "LSD82806102016",
-        "LsdbeOptions": "LBE, SBE, DBE"
+        "LsdbeNumber": "LSDR6873102019",
+        "LsdbeOptions": "LBE, SBE, DBE, ROB"
     },
     {
         "BusinessAddress1": "4202 GRANT STREET NE",
@@ -7201,8 +7212,8 @@
         "BusinessPhone": "(202) 544-4445",
         "CompanyName": "Washington Opportunity Institute",
         "ContactName": "Michel Daley",
-        "LsdbeNumber": "LSDR97179012017",
-        "LsdbeOptions": "LBE, SBE, DBE, ROB"
+        "LsdbeNumber": "LSDZR42861102019",
+        "LsdbeOptions": "LBE, SBE, DBE, DZE, ROB"
     },
     {
         "BusinessAddress1": "2808 MCKINLEY PLACE NW",

@@ -1,15 +1,14 @@
 import json
-
 import navigate
 import retrieve
 
 # Get to the page
-# navigate.load_driver()
-# source = navigate.navigate_to_file()
+navigate.load_driver()
+navigate.navigate_to_file()
+source = navigate.get_page_source()
 
 # Scrape the data and break it into a dictionary
-# data = retrieve.break_tables(source)
-data = retrieve.break_tables()
+data = retrieve.break_tables(source) # uses selenium for data
 
 # Store the data in a file
 print('Writing data to file...')

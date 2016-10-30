@@ -29,11 +29,10 @@ def navigate_to_file():
     display = driver.find_element_by_id("btnPrint")
     display.click()
 
-    print("Done")
 def get_page_source():
+    print("Collecting data...")
     global driver
     return driver.page_source
-
 
 if __name__ == "__main__":
     load_driver()
