@@ -34,6 +34,10 @@ def get_page_source():
     global driver
     return driver.page_source
 
+def close_browser():
+    global driver
+    driver.quit()
+
 if __name__ == "__main__":
     load_driver()
     navigate_to_file()

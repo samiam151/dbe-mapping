@@ -7,6 +7,9 @@ navigate.load_driver()
 navigate.navigate_to_file()
 source = navigate.get_page_source()
 
+# Close browser
+navigate.close_browser()
+
 # Scrape the data and break it into a dictionary
 data = retrieve.break_tables(source) # uses selenium for data
 

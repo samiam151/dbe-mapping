@@ -4,8 +4,8 @@ import pprint
 
 
 # Returns every other table, the left side with the data
-print("Retrieving tables...")
 def get_tables(data_source):
+    print("Retrieving tables...")
     soup = BeautifulSoup(data_source, "html.parser")
     tables = soup.select('td.BORDER-BOTTOM')
     return tables[::2]
@@ -13,14 +13,17 @@ def get_tables(data_source):
 def break_tables(source):
     print("Breaking down tables...")
     # Store the html data file  
-    try:
-        html_file = open(source)
-    except FileNotFoundError as error:
+    
+    if source:
+        html = source
+        print("Using Selenium source data..")
+    else:
         html_file = open('C:\\Users\\samia\\Development\\black-data\\python\\actual_data.html')
-    html = html_file.read()
-
+        html = html_file.read()
+        print("Using backup HTML file...")
+        
     # Retrieve tables
-    tables = get_tables(source)[:]
+    tables = get_tables(html)[:]
     print(" ==> Number of total businesses: " + str(len(tables)))
 
     print("Creating tables object...")

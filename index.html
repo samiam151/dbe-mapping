@@ -3,8 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <p>This is the future.</p>
+
+    <div class="contents"></div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script>
+        $.get("data/data.json").then(function(data){
+            var data = data,
+                $contents = $('.contents');
+
+            data.forEach(function(item, index){
+                $contents.append("<p>" + (index + 1) + ". " + item.CompanyName + "</p>");
+            });
+        });
+    </script>
 </body>
 </html>
