@@ -11,14 +11,15 @@
 
 
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="bower_components/jQuery/dist/jQuery.min.js"></script>
+    <script type="text/javascript" src="bower_components/d3/d3.min.js" async></script>
     <script>
         $.get("data/data.json").then(function(data){
             var data = data,
                 $contents = $('.contents');
 
             data.forEach(function(item, index){
-                $contents.append("<p>" + (index + 1) + ". " + item.CompanyName + "</p>");
+                $contents.append("<p>" + (index + 1) + ". " + item.CompanyName + "<span class='name'> => " + item.ContactName +"</span></p>");
             });
         });
     </script>
