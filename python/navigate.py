@@ -7,8 +7,9 @@ driver = None
 def load_driver():
     # Load up the driver for Chrome
     print("Loading driver...")
-    chromedriver = "C:/Users/samia/Downloads/chromedriver_win32/chromedriver"
-    os.environ["webdriver.chrome.driver"] = chromedriver
+    # chromedriver = "C:/Users/samia/Downloads/chromedriver_win32/chromedriver"
+    chromedriver = "./chromedriver.exe"
+    # os.environ["webdriver.chrome.driver"] = chromedriver
     global driver
     driver = webdriver.Chrome(chromedriver)
 

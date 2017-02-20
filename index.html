@@ -2,26 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minority Owned Business</title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-
-    <div class="contents"></div>
-
-
-
+    <h2 class="container">Minority Owned Business in DC</h2>
+    <div id="map"></div>
+    
     <script type="text/javascript" src="bower_components/jQuery/dist/jQuery.min.js"></script>
-    <script type="text/javascript" src="bower_components/d3/d3.min.js" async></script>
-    <script>
-        $.get("data/data.json").then(function(data){
-            var data = data,
-                $contents = $('.contents');
-
-            data.forEach(function(item, index){
-                $contents.append("<p>" + (index + 1) + ". " + item.CompanyName + "<span class='name'> => " + item.ContactName +"</span></p>");
-            });
-        });
-    </script>
+    <!--<script type="text/javascript" src="bower_components/d3/d3.min.js"></script>	-->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARLHbCG2VmuxwpTl4O67ZPRGjJeea4_30&callback=initMap"></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>-->
 </body>
 </html>
