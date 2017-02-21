@@ -84,6 +84,7 @@ class DataMap {
             lat: center.lat,
             lng: center.lng
         };
+        this.markers = [];
     }
 
     test() {
@@ -100,8 +101,11 @@ class DataMap {
                 map: this.selector,
                 data: point
             };
-            new __WEBPACK_IMPORTED_MODULE_0__marker__["a" /* Marker */](options)
+            marker = new __WEBPACK_IMPORTED_MODULE_0__marker__["a" /* Marker */](options)
+            
+            
         }
+        this.markers.push(marker)
         // return marker;
     }
 
@@ -118,6 +122,8 @@ class DataMap {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__map__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tooltip__ = __webpack_require__(2);
+
 
 
 class Marker {
@@ -173,9 +179,8 @@ function init(){
     $.get('data/data_fix.json').then(data => {
         data.forEach((business, index) => {
             new_map.addMarker(business);
-            // var marker = addMarker(business, index);
-            // markers.push(marker);
-        });    
+        }); 
+        console.log(new_map.markers)   
     });
 
     $('.button-map.resize').on('click', function(){

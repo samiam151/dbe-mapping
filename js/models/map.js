@@ -10,10 +10,7 @@ export class DataMap {
             lat: center.lat,
             lng: center.lng
         };
-    }
-
-    test() {
-        console.log(this.new + "is more more!");
+        this.markers = [];
     }
 
     addMarker(point){
@@ -26,9 +23,9 @@ export class DataMap {
                 map: this.selector,
                 data: point
             };
-            new Marker.Marker(options)
+            marker = new Marker.Marker(options)       
         }
-        // return marker;
+        this.markers.push(marker)
     }
 
     static getZoom(){

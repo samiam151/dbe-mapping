@@ -1,4 +1,5 @@
 import * as Map from "./map";
+import * as tooltip from "./tooltip";
 
 export class Marker {
     constructor(options) {

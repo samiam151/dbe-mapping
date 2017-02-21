@@ -5,22 +5,23 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/webpack --config webpack.config.js" ,
-    "tester": "echo \"test\"" 
+    "build": "./node_modules/.bin/webpack --config webpack.config.js",
+    "tester": "echo \"test\""
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-preset-env": "^1.1.8",
     "browser-sync": "^2.17.5",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
+    "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.0",
     "gulp-load-plugins": "^1.4.0",
+    "gulp-minify": "0.0.15",
     "gulp-sass": "^2.3.2",
+    "gulp-uglify": "^2.0.1",
     "gulp-util": "^3.0.7",
-    "babel-preset-env": "^1.1.8",
-    "gulp-babel": "^6.1.2",
     "webpack": "^2.2.1"
   }
 }
-  

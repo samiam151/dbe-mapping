@@ -18,7 +18,18 @@ gulp.task('bundle', () => {
 
     return gulp.src("./js/script.js")
         .pipe($.babel())
+        // .pipe($.minify())
         .pipe(gulp.dest('./dist'))    
+})
+
+gulp.task('minifyjs', () => {
+    log("Minifying JS...")
+    setTimeout(function() {
+        return gulp.src('./dist/bundle.js')
+        .pipe($.uglify())
+        .pipe(gulp.dest('./dist'));
+    }, 3000);
+    
 })
 
 gulp.task('build-css', () => {

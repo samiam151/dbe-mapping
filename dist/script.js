@@ -21,9 +21,8 @@ function init() {
     $.get('data/data_fix.json').then(function (data) {
         data.forEach(function (business, index) {
             new_map.addMarker(business);
-            // var marker = addMarker(business, index);
-            // markers.push(marker);
         });
+        console.log(new_map.markers);
     });
 
     $('.button-map.resize').on('click', function () {
