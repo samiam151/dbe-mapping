@@ -63,100 +63,128 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-class Map {
-    constructor(name) {
-        this.name = name;
-        this.new = "new";
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__marker__ = __webpack_require__(1);
+
+
+class DataMap {
+    constructor(zoom, center) {
+        this.selector = new google.maps.Map(document.getElementById('map'), {
+            zoom: zoom,
+            center: center});
+        this.initialZoom = zoom;
+        this.initialCenter = {
+            lat: center.lat,
+            lng: center.lng
+        };
     }
 
     test() {
-        console.log(this.new + "is more!");
+        console.log(this.new + "is more more!");
+    }
+
+    addMarker(point){
+        let coords = { lat: point.Coordinates.Latitude, lng:point.Coordinates.Longitude},
+            marker = null;
+        if (coords.lat && coords.lng){
+            let options = {
+                position: coords,
+                title: point.CompanyName,
+                map: this.selector,
+                data: point
+            };
+            new __WEBPACK_IMPORTED_MODULE_0__marker__["a" /* Marker */](options)
+        }
+        // return marker;
+    }
+
+    static getZoom(){
+        return this.initialZoom()
     }
 }
+/* harmony export (immutable) */ __webpack_exports__["a"] = DataMap;
 
-module.exports = Map;
 
 /***/ }),
 /* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__map_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__map_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__map_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__map__ = __webpack_require__(0);
 
 
-let mymap = new __WEBPACK_IMPORTED_MODULE_0__map_js___default.a('test');
-console.log(mymap);
-mymap.test();
-
-(function(window, $){
-    function _initMap(){
-        var markers = [];
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 11,
-            center: {lat: 38.917, lng: -77.016420} // center of Wash.DC
+class Marker {
+    constructor(options) {
+        this.selector = new google.maps.Marker({
+            position: options.position,
+            title: options.title,
+            map: options.map
         });
+        this.map = options.map;
+        this.data = options.data
 
-        var initialMapSettings = {
-            zoom: map.getZoom(),
-            center: {
-                lat: map.getCenter().lat(),
-                lng: map.getCenter().lng()
-            }
-        }
-
-        var resizeButton = document.querySelector('.button-map.resize');
-        resizeButton.addEventListener('click', function(){
-            map.setCenter(initialMapSettings.center);
-            map.setZoom(initialMapSettings.zoom);
+        this.selector.addListener('click', function(e){
+            this.map.setZoom(this.map.getZoom() + 3);
+            // map.setCenter(marker.position.lat(), marker.position.lng());
+            // map.setCenter(30, 70);
+            // infoWindow.open(map, marker)
         });
-
-        $.get('data/data_fix.json').then(function(data){
-            data.forEach(function(business, index){
-                var marker = addMarker(business, index);
-                markers.push(marker);
-            });    
-        });
-
-        
-
-
-        function addMarker(point, index){
-            var coords = { lat: point.Coordinates.Latitude, lng:point.Coordinates.Longitude};
-            var content = "<div class='popup'>"+ point.CompanyName +"</div>";
-            // var index = 0;
-
-            var infoWindow = new google.maps.InfoWindow({
-                content: content
-            });
-            if (coords.lat && coords.lng){
-                
-                var marker = new google.maps.Marker({
-                    position: coords,
-                    title: point.CompanyName,
-                    map: map
-                });
-
-                marker.addListener('click', function(e){
-                    map.setZoom(map.getZoom() + 3);
-                    // map.setCenter(marker.position.lat(), marker.position.lng());
-                    // map.setCenter(30, 70);
-                    infoWindow.open(map, marker)
-                });
-            }
-            return marker;
-        } 
     }
-    window.initMap = _initMap;
-}(window, jQuery));
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Marker;
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Tooltip {
+    constructor() {}
+}
+/* unused harmony export Tooltip */
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__models_map__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_marker__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_tooltip__ = __webpack_require__(2);
+
+
+
+
+function init(){
+    let dc = {lat: 38.917, lng: -77.016420}
+    let new_map = new __WEBPACK_IMPORTED_MODULE_0__models_map__["a" /* DataMap */](11, dc)
+
+    $.get('data/data_fix.json').then(data => {
+        data.forEach((business, index) => {
+            new_map.addMarker(business);
+            // var marker = addMarker(business, index);
+            // markers.push(marker);
+        });    
+    });
+
+    $('.button-map.resize').on('click', function(){
+        new_map.selector.setCenter(new_map.initialCenter);
+        new_map.selector.setZoom(new_map.initialZoom);
+    });
+}
+
+window.initMap = init
 
 
 /***/ })

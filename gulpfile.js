@@ -14,7 +14,11 @@ gulp.task('babel', () => {
 gulp.task('bundle', () => {
     log("Bundling...")
     function puts(error, stdout, sterr) { sys.puts(stdout) }
-    exec("npm run build", puts)    
+    exec("npm run build", puts)
+
+    return gulp.src("./js/script.js")
+        .pipe($.babel())
+        .pipe(gulp.dest('./dist'))    
 })
 
 gulp.task('build-css', () => {
@@ -29,9 +33,9 @@ gulp.task('browsersync', () => {
     startBrowserSync();
 })
 
-gulp.task('watch', ['babel', 'bundle', 'build-css'], () => {
+gulp.task('watch', ['bundle', 'build-css'], () => {
     gulp.watch('./styles/scss/*.scss', ['build-css']);
-    gulp.watch('./js/js/script.js', ['babel', 'bundle']);
+    gulp.watch('./js/*.js', ['bundle']);
 })
 
 gulp.task('default', ['watch', 'browsersync'])

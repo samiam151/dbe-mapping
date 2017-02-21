@@ -1,69 +1,35 @@
-'use strict';
+"use strict";
 
-var _map = require('./map.js');
+var _map = require("./models/map");
 
-var _map2 = _interopRequireDefault(_map);
+var Map = _interopRequireWildcard(_map);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _marker = require("./models/marker");
 
-var mymap = new _map2.default('test');
-console.log(mymap);
-mymap.test();
+var Marker = _interopRequireWildcard(_marker);
 
-(function (window, $) {
-    function _initMap() {
-        var markers = [];
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 11,
-            center: { lat: 38.917, lng: -77.016420 } // center of Wash.DC
+var _tooltip = require("./models/tooltip");
+
+var Tooltip = _interopRequireWildcard(_tooltip);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function init() {
+    var dc = { lat: 38.917, lng: -77.016420 };
+    var new_map = new Map.DataMap(11, dc);
+
+    $.get('data/data_fix.json').then(function (data) {
+        data.forEach(function (business, index) {
+            new_map.addMarker(business);
+            // var marker = addMarker(business, index);
+            // markers.push(marker);
         });
+    });
 
-        var initialMapSettings = {
-            zoom: map.getZoom(),
-            center: {
-                lat: map.getCenter().lat(),
-                lng: map.getCenter().lng()
-            }
-        };
+    $('.button-map.resize').on('click', function () {
+        new_map.selector.setCenter(new_map.initialCenter);
+        new_map.selector.setZoom(new_map.initialZoom);
+    });
+}
 
-        var resizeButton = document.querySelector('.button-map.resize');
-        resizeButton.addEventListener('click', function () {
-            map.setCenter(initialMapSettings.center);
-            map.setZoom(initialMapSettings.zoom);
-        });
-
-        $.get('data/data_fix.json').then(function (data) {
-            data.forEach(function (business, index) {
-                var marker = addMarker(business, index);
-                markers.push(marker);
-            });
-        });
-
-        function addMarker(point, index) {
-            var coords = { lat: point.Coordinates.Latitude, lng: point.Coordinates.Longitude };
-            var content = "<div class='popup'>" + point.CompanyName + "</div>";
-            // var index = 0;
-
-            var infoWindow = new google.maps.InfoWindow({
-                content: content
-            });
-            if (coords.lat && coords.lng) {
-
-                var marker = new google.maps.Marker({
-                    position: coords,
-                    title: point.CompanyName,
-                    map: map
-                });
-
-                marker.addListener('click', function (e) {
-                    map.setZoom(map.getZoom() + 3);
-                    // map.setCenter(marker.position.lat(), marker.position.lng());
-                    // map.setCenter(30, 70);
-                    infoWindow.open(map, marker);
-                });
-            }
-            return marker;
-        }
-    }
-    window.initMap = _initMap;
-})(window, jQuery);
+window.initMap = init;
