@@ -1,0 +1,13 @@
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    ul {
+        width: 50%;
+
+        &.right {
+            text-align: right;
+        }
+    }
+}

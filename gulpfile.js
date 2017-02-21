@@ -1,33 +1,40 @@
-var gulp = require('gulp');
-var browsersync = require('browser-sync');
-var $ = require('gulp-load-plugins')({lazy: true});
+const gulp = require('gulp');
+const browsersync = require('browser-sync');
+const $ = require('gulp-load-plugins')({lazy: true});
+const sys = require('sys')
+const exec = require('child_process').exec
 
-// gulp.task('build-js', function(){
-//     log("Building JS...");
-//     return gulp
-//     .src('./angular/**/*.js')
-//     // .pipe($.uglify())
-//     .pipe($.concat('bundle.js'))
-//     .pipe(gulp.dest('./'));
-// });
+gulp.task('babel', () => {
+    log('Babeling...')
+    return gulp.src("./js/script.js")
+        .pipe($.babel())
+        .pipe(gulp.dest('./dist'))
+})
 
-gulp.task('build-css', function(){
+gulp.task('bundle', () => {
+    log("Bundling...")
+    function puts(error, stdout, sterr) { sys.puts(stdout) }
+    exec("npm run build", puts)    
+})
+
+gulp.task('build-css', () => {
     log('Building CSS...');
     return gulp.src('./styles/styles.scss')
         .pipe($.sass())
         .pipe($.autoprefixer())
-        .pipe(gulp.dest('./styles/'));
-});
+        .pipe(gulp.dest('./dist/'));
+})
 
-gulp.task('browsersync', function(){
+gulp.task('browsersync', () => {
     startBrowserSync();
-});
+})
 
-gulp.task('watch', ['build-css'], function(){
-    gulp.watch('./styles/styles.scss', ['build-css']);
-});
+gulp.task('watch', ['babel', 'bundle', 'build-css'], () => {
+    gulp.watch('./styles/scss/*.scss', ['build-css']);
+    gulp.watch('./js/js/script.js', ['babel', 'bundle']);
+})
 
-gulp.task('default', ['watch', 'browsersync']);
+gulp.task('default', ['watch', 'browsersync'])
 
 // UTILITY FUNCITONS
 function log(msg){

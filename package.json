@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/webpack --config webpack.config.js" ,
+    "tester": "echo \"test\"" 
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +17,10 @@
     "gulp-concat": "^2.6.0",
     "gulp-load-plugins": "^1.4.0",
     "gulp-sass": "^2.3.2",
-    "gulp-util": "^3.0.7"
+    "gulp-util": "^3.0.7",
+    "babel-preset-env": "^1.1.8",
+    "gulp-babel": "^6.1.2",
+    "webpack": "^2.2.1"
   }
 }
+  
