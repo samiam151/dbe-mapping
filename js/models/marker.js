@@ -1,5 +1,5 @@
-import * as Map from "./map";
-import * as tooltip from "./tooltip";
+import { Map } from "./map";
+import { Tooltip } from "./infowindow";
 
 export class Marker {
     constructor(options) {
@@ -11,9 +11,9 @@ export class Marker {
         this.map = options.map;
         this.data = options.data
 
-        this.selector.addListener('click', function(e){
+        this.selector.addListener('click', (e) => {
             this.map.setZoom(this.map.getZoom() + 3);
-            // map.setCenter(marker.position.lat(), marker.position.lng());
+            this.map.setCenter(this.selector.position.lat(), this.selector.position.lng());
             // map.setCenter(30, 70);
             // infoWindow.open(map, marker)
         });

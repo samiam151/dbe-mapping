@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,7 +71,18 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__marker__ = __webpack_require__(1);
+class InfoWindow {
+    constructor() {}
+}
+/* unused harmony export InfoWindow */
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__marker__ = __webpack_require__(2);
 
 
 class DataMap {
@@ -87,10 +98,6 @@ class DataMap {
         this.markers = [];
     }
 
-    test() {
-        console.log(this.new + "is more more!");
-    }
-
     addMarker(point){
         let coords = { lat: point.Coordinates.Latitude, lng:point.Coordinates.Longitude},
             marker = null;
@@ -101,12 +108,9 @@ class DataMap {
                 map: this.selector,
                 data: point
             };
-            marker = new __WEBPACK_IMPORTED_MODULE_0__marker__["a" /* Marker */](options)
-            
-            
+            marker = new __WEBPACK_IMPORTED_MODULE_0__marker__["a" /* Marker */](options)       
         }
         this.markers.push(marker)
-        // return marker;
     }
 
     static getZoom(){
@@ -117,12 +121,12 @@ class DataMap {
 
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__map__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tooltip__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__map__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__infowindow__ = __webpack_require__(0);
 
 
 
@@ -136,9 +140,9 @@ class Marker {
         this.map = options.map;
         this.data = options.data
 
-        this.selector.addListener('click', function(e){
+        this.selector.addListener('click', (e) => {
             this.map.setZoom(this.map.getZoom() + 3);
-            // map.setCenter(marker.position.lat(), marker.position.lng());
+            this.map.setCenter(this.selector.position.lat(), this.selector.position.lng());
             // map.setCenter(30, 70);
             // infoWindow.open(map, marker)
         });
@@ -149,44 +153,73 @@ class Marker {
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class Tooltip {
-    constructor() {}
-}
-/* unused harmony export Tooltip */
-
-
-/***/ }),
 /* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+class Business {
+    constructor(business) {
+        this.name = business.CompanyName;
+        this.address = [
+            business.BusinessAddress1,
+            business.BusinessAddress2,
+            business.BusinessAddress3];
+        this.owner = business.ContactName;
+        this.email = business.BusinessEMail;
+        this.phone = business.BusinessPhone;
+
+        if (business.LsdbeOptions){
+            this.labels = business.LsdbeOptions.replace(/\s/g,'').split(',');
+        }
+        
+        this.businessNumber = business.LsdbeNumber;
+        this.coords = business.Coordinates;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Business;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__models_map__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_marker__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_tooltip__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__models_map__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_marker__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_infowindow__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_business__ = __webpack_require__(3);
 
 
 
+
+
+// import * as DataService from "./services/dataService";
 
 function init(){
     let dc = {lat: 38.917, lng: -77.016420}
-    let new_map = new __WEBPACK_IMPORTED_MODULE_0__models_map__["a" /* DataMap */](11, dc)
-
+    let map = new __WEBPACK_IMPORTED_MODULE_0__models_map__["a" /* DataMap */](11, dc)
+    
     $.get('data/data_fix.json').then(data => {
+        let Businesses = [];
+
         data.forEach((business, index) => {
-            new_map.addMarker(business);
+            Businesses.push(new __WEBPACK_IMPORTED_MODULE_3__models_business__["a" /* Business */](business));
+            map.addMarker(business);
         }); 
-        console.log(new_map.markers)   
+
+        console.log(Businesses);
+        console.log(map)   
     });
 
     $('.button-map.resize').on('click', function(){
-        new_map.selector.setCenter(new_map.initialCenter);
-        new_map.selector.setZoom(new_map.initialZoom);
+        map.selector.setCenter(map.initialCenter);
+        map.selector.setZoom(map.initialZoom);
     });
+
+    for (let key in map.initialCenter){
+        console.log(typeof map.initialCenter[key]);
+    }
 }
 
 window.initMap = init

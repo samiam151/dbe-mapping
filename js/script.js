@@ -1,22 +1,34 @@
-import * as Map from "./models/map";
-import * as Marker from "./models/marker";
-import * as Tooltip from "./models/tooltip";
+import { DataMap } from "./models/map";
+import { Marker } from "./models/marker";
+import { Tooltip } from "./models/infowindow";
+import { Business } from "./models/business";
+
+// import * as DataService from "./services/dataService";
 
 function init(){
     let dc = {lat: 38.917, lng: -77.016420}
-    let new_map = new Map.DataMap(11, dc)
-
+    let map = new DataMap(11, dc)
+    
     $.get('data/data_fix.json').then(data => {
+        let Businesses = [];
+
         data.forEach((business, index) => {
-            new_map.addMarker(business);
+            Businesses.push(new Business(business));
+            map.addMarker(business);
         }); 
-        console.log(new_map.markers)   
+
+        console.log(Businesses);
+        console.log(map)   
     });
 
     $('.button-map.resize').on('click', function(){
-        new_map.selector.setCenter(new_map.initialCenter);
-        new_map.selector.setZoom(new_map.initialZoom);
+        map.selector.setCenter(map.initialCenter);
+        map.selector.setZoom(map.initialZoom);
     });
+
+    for (let key in map.initialCenter){
+        console.log(typeof map.initialCenter[key]);
+    }
 }
 
 window.initMap = init

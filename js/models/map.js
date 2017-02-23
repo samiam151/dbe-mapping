@@ -1,4 +1,4 @@
-import * as Marker from "./marker";
+import { Marker } from "./marker";
 
 export class DataMap {
     constructor(zoom, center) {
@@ -23,7 +23,7 @@ export class DataMap {
                 map: this.selector,
                 data: point
             };
-            marker = new Marker.Marker(options)       
+            marker = new Marker(options)       
         }
         this.markers.push(marker)
     }
