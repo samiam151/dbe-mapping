@@ -8,27 +8,26 @@ import { Business } from "./models/business";
 function init(){
     let dc = {lat: 38.917, lng: -77.016420}
     let map = new DataMap(11, dc)
-    
-    $.get('data/data_fix.json').then(data => {
-        let Businesses = [];
 
-        data.forEach((business, index) => {
-            Businesses.push(new Business(business));
-            map.addMarker(business);
-        }); 
-
-        console.log(Businesses);
-        console.log(map)   
-    });
-
-    $('.button-map.resize').on('click', function(){
+    // Resize Button
+    $('.button-map.resize').on('click', () => {
         map.selector.setCenter(map.initialCenter);
         map.selector.setZoom(map.initialZoom);
     });
+    
+    // Place Markers
+    $.get('data/data_fix.json').then(businesses => {
+        // businesses is a json object of containing the data of each business
+        
+        let Businesses = [];
 
-    for (let key in map.initialCenter){
-        console.log(typeof map.initialCenter[key]);
-    }
+        // each business is an object  
+        businesses.forEach((business, index) => {
+            Businesses.push(new Business(business));
+            map.addMarker(business);
+        }); 
+    });
+
 }
 
 window.initMap = init

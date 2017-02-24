@@ -6,7 +6,7 @@ const exec = require('child_process').exec
 
 gulp.task('babel', () => {
     log('Babeling...')
-    return gulp.src("./js/script.js")
+    return gulp.src("./js/*.js")
         .pipe($.babel())
         .pipe(gulp.dest('./dist'))
 })
@@ -14,23 +14,25 @@ gulp.task('babel', () => {
 gulp.task('bundle', () => {
     log("Bundling...")
     function puts(error, stdout, sterr) { sys.puts(stdout) }
-    exec("npm run build", puts)
+    exec("npm run build", function(error, stdout, sterr){
+        return gulp.src("./js/script.js")
+            .pipe($.babel())
+            // .pipe($.minify())
+            .pipe(gulp.dest('./dist'))        
+    })
 
-    return gulp.src("./js/script.js")
-        .pipe($.babel())
-        // .pipe($.minify())
-        .pipe(gulp.dest('./dist'))    
-})
-
-gulp.task('minifyjs', () => {
-    log("Minifying JS...")
-    setTimeout(function() {
-        return gulp.src('./dist/bundle.js')
-        .pipe($.uglify())
-        .pipe(gulp.dest('./dist'));
-    }, 3000);
     
 })
+
+// gulp.task('minifyjs', () => {
+//     log("Minifying JS...")
+//     setTimeout(function() {
+//         return gulp.src('./dist/bundle.js')
+//         .pipe($.uglify())
+//         .pipe(gulp.dest('./dist'));
+//     }, 3000);
+    
+// })
 
 gulp.task('build-css', () => {
     log('Building CSS...');
@@ -46,7 +48,7 @@ gulp.task('browsersync', () => {
 
 gulp.task('watch', ['bundle', 'build-css'], () => {
     gulp.watch('./styles/scss/*.scss', ['build-css']);
-    gulp.watch('./js/*.js', ['bundle']);
+    gulp.watch('./js/**/*.js', ['bundle']);
 })
 
 gulp.task('default', ['watch', 'browsersync'])

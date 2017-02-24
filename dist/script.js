@@ -1,7 +1,5 @@
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _map = require("./models/map");
 
 var _marker = require("./models/marker");
@@ -16,26 +14,24 @@ function init() {
     var dc = { lat: 38.917, lng: -77.016420 };
     var map = new _map.DataMap(11, dc);
 
-    $.get('data/data_fix.json').then(function (data) {
-        var Businesses = [];
-
-        data.forEach(function (business, index) {
-            Businesses.push(new _business.Business(business));
-            map.addMarker(business);
-        });
-
-        console.log(Businesses);
-        console.log(map);
-    });
-
+    // Resize Button
     $('.button-map.resize').on('click', function () {
         map.selector.setCenter(map.initialCenter);
         map.selector.setZoom(map.initialZoom);
     });
 
-    for (var key in map.initialCenter) {
-        console.log(_typeof(map.initialCenter[key]));
-    }
+    // Place Markers
+    $.get('data/data_fix.json').then(function (businesses) {
+        // businesses is a json object of containing the data of each business
+
+        var Businesses = [];
+
+        // each business is an object  
+        businesses.forEach(function (business, index) {
+            Businesses.push(new _business.Business(business));
+            map.addMarker(business);
+        });
+    });
 }
 
 window.initMap = init;

@@ -4,7 +4,9 @@ export class DataMap {
     constructor(zoom, center) {
         this.selector = new google.maps.Map(document.getElementById('map'), {
             zoom: zoom,
-            center: center});
+            center: center,
+            gestureHandling: 'auto'
+         });
         this.initialZoom = zoom;
         this.initialCenter = {
             lat: center.lat,
@@ -13,22 +15,22 @@ export class DataMap {
         this.markers = [];
     }
 
-    addMarker(point){
-        let coords = { lat: point.Coordinates.Latitude, lng:point.Coordinates.Longitude},
+    addMarker(business){
+        let coords = { lat: business.Coordinates.Latitude, lng:business.Coordinates.Longitude},
             marker = null;
         if (coords.lat && coords.lng){
             let options = {
                 position: coords,
-                title: point.CompanyName,
+                title: business.CompanyName,
                 map: this.selector,
-                data: point
+                business: business
             };
             marker = new Marker(options)       
         }
         this.markers.push(marker)
     }
 
-    static getZoom(){
+    getZoom(){
         return this.initialZoom()
     }
 }

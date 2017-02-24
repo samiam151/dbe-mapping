@@ -72,9 +72,26 @@
 
 "use strict";
 class InfoWindow {
-    constructor() {}
+    constructor(business) {
+        this.business = business;
+        this.content = `
+            <div class="infowindow">
+                <h3>${this.business.CompanyName}</h3>           
+                <p>${this.business.BusinessPhone}</p>
+                <p>${this.business.ContactName}</p>
+                <p>
+                    <small>${this.business.BusinessAddress1}</small>
+                    <small>${this.business.BusinessAddress2}</small>
+                    <small>${this.business.BusinessAddress3}</small>
+                </p>
+            </div>
+        `
+        this.selector = new google.maps.InfoWindow({
+            content: this.content
+        })
+    }
 }
-/* unused harmony export InfoWindow */
+/* harmony export (immutable) */ __webpack_exports__["a"] = InfoWindow;
 
 
 /***/ }),
@@ -89,7 +106,9 @@ class DataMap {
     constructor(zoom, center) {
         this.selector = new google.maps.Map(document.getElementById('map'), {
             zoom: zoom,
-            center: center});
+            center: center,
+            gestureHandling: 'auto'
+         });
         this.initialZoom = zoom;
         this.initialCenter = {
             lat: center.lat,
@@ -98,22 +117,22 @@ class DataMap {
         this.markers = [];
     }
 
-    addMarker(point){
-        let coords = { lat: point.Coordinates.Latitude, lng:point.Coordinates.Longitude},
+    addMarker(business){
+        let coords = { lat: business.Coordinates.Latitude, lng:business.Coordinates.Longitude},
             marker = null;
         if (coords.lat && coords.lng){
             let options = {
                 position: coords,
-                title: point.CompanyName,
+                title: business.CompanyName,
                 map: this.selector,
-                data: point
+                business: business
             };
             marker = new __WEBPACK_IMPORTED_MODULE_0__marker__["a" /* Marker */](options)       
         }
         this.markers.push(marker)
     }
 
-    static getZoom(){
+    getZoom(){
         return this.initialZoom()
     }
 }
@@ -131,20 +150,30 @@ class DataMap {
 
 
 class Marker {
-    constructor(options) {
+    constructor(markerOptions) {
         this.selector = new google.maps.Marker({
-            position: options.position,
-            title: options.title,
-            map: options.map
+            position: markerOptions.position,
+            title: markerOptions.title,
+            map: markerOptions.map
         });
-        this.map = options.map;
-        this.data = options.data
 
-        this.selector.addListener('click', (e) => {
-            this.map.setZoom(this.map.getZoom() + 3);
-            this.map.setCenter(this.selector.position.lat(), this.selector.position.lng());
-            // map.setCenter(30, 70);
+        this.map = markerOptions.map;
+        let business = markerOptions.business
+        // Adds a click event listener to the marker
+        this.selector.addListener('click', function(e){
+            // 'this' is the google map marker selector
+            console.log(business);
+            let currentZoom = this.map.getZoom()
+
+            this.map.setZoom(determineZoom(currentZoom));
+            this.map.setCenter({lat: business.Coordinates.Latitude, lng: business.Coordinates.Longitude });
             // infoWindow.open(map, marker)
+            let window = new __WEBPACK_IMPORTED_MODULE_1__infowindow__["a" /* InfoWindow */](business)
+            window.selector.open(this.map, this)
+
+            function determineZoom(currentZoom){
+                return currentZoom;
+            }
         });
     }
 }
@@ -199,27 +228,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 function init(){
     let dc = {lat: 38.917, lng: -77.016420}
     let map = new __WEBPACK_IMPORTED_MODULE_0__models_map__["a" /* DataMap */](11, dc)
-    
-    $.get('data/data_fix.json').then(data => {
-        let Businesses = [];
 
-        data.forEach((business, index) => {
-            Businesses.push(new __WEBPACK_IMPORTED_MODULE_3__models_business__["a" /* Business */](business));
-            map.addMarker(business);
-        }); 
-
-        console.log(Businesses);
-        console.log(map)   
-    });
-
-    $('.button-map.resize').on('click', function(){
+    // Resize Button
+    $('.button-map.resize').on('click', () => {
         map.selector.setCenter(map.initialCenter);
         map.selector.setZoom(map.initialZoom);
     });
+    
+    // Place Markers
+    $.get('data/data_fix.json').then(businesses => {
+        // businesses is a json object of containing the data of each business
+        
+        let Businesses = [];
 
-    for (let key in map.initialCenter){
-        console.log(typeof map.initialCenter[key]);
-    }
+        // each business is an object  
+        businesses.forEach((business, index) => {
+            Businesses.push(new __WEBPACK_IMPORTED_MODULE_3__models_business__["a" /* Business */](business));
+            map.addMarker(business);
+        }); 
+    });
+
 }
 
 window.initMap = init
