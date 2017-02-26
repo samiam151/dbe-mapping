@@ -4,6 +4,16 @@ import { Tooltip } from "./models/infowindow";
 import { Business } from "./models/business";
 
 // import * as DataService from "./services/dataService";
+let openWindow = null;
+
+window.addEventListener('markerCreated', (e) => {
+    if (openWindow){
+        openWindow.delete();
+        openWindow = null;  
+    }
+    openWindow = e.detail;
+});
+
 
 function init(){
     let dc = {lat: 38.917, lng: -77.016420}

@@ -14,7 +14,6 @@ export class Marker {
         // Adds a click event listener to the marker
         this.selector.addListener('click', function(e){
             // 'this' is the google map marker selector
-            console.log(business);
             let currentZoom = this.map.getZoom()
 
             this.map.setZoom(determineZoom(currentZoom));

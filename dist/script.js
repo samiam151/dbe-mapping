@@ -9,6 +9,15 @@ var _infowindow = require("./models/infowindow");
 var _business = require("./models/business");
 
 // import * as DataService from "./services/dataService";
+var openWindow = null;
+
+window.addEventListener('markerCreated', function (e) {
+    if (openWindow) {
+        openWindow.delete();
+        openWindow = null;
+    }
+    openWindow = e.detail;
+});
 
 function init() {
     var dc = { lat: 38.917, lng: -77.016420 };

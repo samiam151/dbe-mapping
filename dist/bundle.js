@@ -80,8 +80,8 @@ class InfoWindow {
                 <p>${this.business.BusinessPhone}</p>
                 <p>${this.business.ContactName}</p>
                 <p>
-                    <small>${this.business.BusinessAddress1}</small>
-                    <small>${this.business.BusinessAddress2}</small>
+                    <small>${this.business.BusinessAddress1}, </small>
+                    <small>${this.business.BusinessAddress2} </small>
                     <small>${this.business.BusinessAddress3}</small>
                 </p>
             </div>
@@ -89,7 +89,19 @@ class InfoWindow {
         this.selector = new google.maps.InfoWindow({
             content: this.content
         })
+
+        let event = new CustomEvent('markerCreated', {
+            'detail': this
+        });
+
+        window.dispatchEvent(event);
+        
     }
+
+    delete() {
+        this.selector.setMap(null);
+    }
+        
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = InfoWindow;
 
@@ -162,7 +174,6 @@ class Marker {
         // Adds a click event listener to the marker
         this.selector.addListener('click', function(e){
             // 'this' is the google map marker selector
-            console.log(business);
             let currentZoom = this.map.getZoom()
 
             this.map.setZoom(determineZoom(currentZoom));
@@ -224,6 +235,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 // import * as DataService from "./services/dataService";
+let openWindow = null;
+
+window.addEventListener('markerCreated', (e) => {
+    if (openWindow){
+        openWindow.delete();
+        openWindow = null;  
+    }
+    openWindow = e.detail;
+});
+
 
 function init(){
     let dc = {lat: 38.917, lng: -77.016420}
