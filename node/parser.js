@@ -75,14 +75,23 @@ fs.readFile("./python/actual_data.html", (err, file) => {
         businessTypeTable = businessTypeTable
             .filter((item, index) => index % 2 === 0)
             .map(item => item[1])
+        
+        // flatten info array into one object literal
+        let infoObj = {}
+        infoTable.forEach(table => {
+            Object.keys(table).forEach(key => {
+                infoObj[key] = table[key]
+            })
+        })
 
         return {
-            info: infoTable,
+            info: infoObj,
             types: businessTypeTable
         }        
     })
 
-    console.log(businesses[45])
+    console.log(businesses[35])
+    console.log(businesses[35].info.ContactName)
 })
 
 function everyFour(i){
