@@ -27,33 +27,62 @@ fs.readFile("./python/actual_data.html", (err, file) => {
         }
     })
 
-   
+
+   // every business is a array of all needed spans
     businesses = businesses.map((item, index_trs) => {
-        // once(index_trs, () => {
-        //     console.log(item)
-        // })
-``
         let groups = []
         item.forEach(td => {
             let spans = $(td).find('span') 
             spans.each((index_span, span) => {
-                let obj = {}
+                let arr = []
                 // let spans = $(span).find('span')
-                obj[span.attribs.id] = $(span).text()
-                groups.push(obj)
+                arr.push(span.attribs.id)
+                arr.push($(span).text())
+                groups.push(arr)
             })
-        })
-        
+        })       
         return groups
     })
 
-    // let EXAMPLE = businesses[0].span_0;
-    console.log(businesses[0])
-    console.log(businesses[1])
-    console.log(businesses[2])
-    console.log(businesses[3])
-    // console.log(EXAMPLE.attribs.id)
-    // console.log($(EXAMPLE).text())
+
+    // turn spans in to an object
+    businesses = businesses.map((business, index) => {
+        let infoTable = [],
+            businessTypeTable = [],
+            returnObj = {};
+
+        business.forEach(span => {
+            if (span[0].includes('repActivity')){
+                businessTypeTable.push(span)
+            } else {
+                if (!span[0].includes('Span')) {
+                    infoTable.push(span)
+                }
+            }
+        })
+
+        infoTable = infoTable.map(item => {
+            let obj = {},
+                id = item[0],
+                value = item[1],
+                length = id.split('_').length;
+                
+            let newId = id.split('_')[length - 1].slice(3)
+            obj[newId] = value;
+            return obj
+        })
+
+        businessTypeTable = businessTypeTable
+            .filter((item, index) => index % 2 === 0)
+            .map(item => item[1])
+
+        return {
+            info: infoTable,
+            types: businessTypeTable
+        }        
+    })
+
+    console.log(businesses[45])
 })
 
 function everyFour(i){
