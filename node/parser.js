@@ -1,5 +1,8 @@
 var fs = require('fs');
 var cheerio = require('cheerio');
+var Geocoder = require('node-geocoder');
+
+var geocoder = Geocoder({provider: 'google'});
 
 fs.readFile("./python/actual_data.html", (err, file) => {
     if (err) console.log(err)
@@ -66,7 +69,7 @@ fs.readFile("./python/actual_data.html", (err, file) => {
                 id = item[0],
                 value = item[1],
                 length = id.split('_').length;
-                
+
             let newId = id.split('_')[length - 1].slice(3)
             obj[newId] = value;
             return obj
@@ -80,6 +83,18 @@ fs.readFile("./python/actual_data.html", (err, file) => {
             info: infoTable,
             types: businessTypeTable
         }        
+    })
+
+
+    // Geocode the addresses
+    businesses = businesses.map((business, index) => {
+        once(index, () => { console.log(business.info[4]['BusinessAddress1']) })
+
+        geocoder.geocode(business.info[4]['BusinessAddress1'], (err, res) => {
+            console.log(res)
+            business['coords'] = res || {};
+        })
+        return business
     })
 
     console.log(businesses[45])
