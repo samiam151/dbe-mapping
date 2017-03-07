@@ -19,9 +19,7 @@ gulp.task('bundle', () => {
             .pipe($.babel())
             // .pipe($.minify())
             .pipe(gulp.dest('./dist'))        
-    })
-
-    
+    })   
 })
 
 // gulp.task('minifyjs', () => {

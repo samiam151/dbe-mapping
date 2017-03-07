@@ -9,7 +9,7 @@ def load_driver():
     print("Loading driver...")
     # chromedriver = "C:/Users/samia/Downloads/chromedriver_win32/chromedriver"
     chromedriver = "./chromedriver.exe"
-    # os.environ["webdriver.chrome.driver"] = chromedriver
+    os.environ["webdriver.chrome.driver"] = chromedriver
     global driver
     driver = webdriver.Chrome(chromedriver)
 
@@ -25,7 +25,7 @@ def navigate_to_file():
 
     # Show the general summary of each business
     print("Clicking print button...")
-    showSummary = driver.find_element_by_id("rblPrintOptions_2")
+    showSummary = driver.find_element_by_id("rblPrintOptions_1")
     showSummary.click()
     display = driver.find_element_by_id("btnPrint")
     display.click()

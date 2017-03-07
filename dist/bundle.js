@@ -79,6 +79,7 @@ class InfoWindow {
                 <h3>${this.business.CompanyName}</h3>           
                 <p>${this.business.BusinessPhone}</p>
                 <p>${this.business.ContactName}</p>
+                <p>${this.business.BusinessEMail}</p>
                 <p>
                     <small>${this.business.BusinessAddress1}, </small>
                     <small>${this.business.BusinessAddress2} </small>
@@ -90,11 +91,9 @@ class InfoWindow {
             content: this.content
         })
 
-        let event = new CustomEvent('markerCreated', {
+        window.dispatchEvent(new CustomEvent('markerCreated', {
             'detail': this
-        });
-
-        window.dispatchEvent(event);
+        }));
         
     }
 

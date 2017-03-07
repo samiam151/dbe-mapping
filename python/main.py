@@ -8,6 +8,7 @@ navigate.load_driver()
 navigate.navigate_to_file()
 source = navigate.get_page_source()
 
+
 # Close browser
 navigate.close_browser()
 
@@ -15,7 +16,9 @@ navigate.close_browser()
 data = retrieve.break_tables(source) # uses selenium for data
 
 # Translate addresses into coordinates
-translated_data = geo.translate(data)
+# translated_data = geo.translate(data)
+for datum in data:
+    datum['Coordinates'] = geo.translate_one("{0}, {1}, {2}".format(datum['BusinessAddress1'], datum['BusinessAddress2'], datum['BusinessAddress3']))
 
 # Store the data in a file
 print('Writing data to file...')
