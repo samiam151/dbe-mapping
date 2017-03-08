@@ -26,7 +26,7 @@ function init(){
     });
     
     // Place Markers
-    $.get('data/data_fix.json').then(businesses => {
+    $.get('data/data_new.json').then(businesses => {
         // businesses is a json object of containing the data of each business
         
         let Businesses = [];

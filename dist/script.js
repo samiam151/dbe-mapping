@@ -30,7 +30,7 @@ function init() {
     });
 
     // Place Markers
-    $.get('data/data_fix.json').then(function (businesses) {
+    $.get('data/data_new.json').then(function (businesses) {
         // businesses is a json object of containing the data of each business
 
         var Businesses = [];

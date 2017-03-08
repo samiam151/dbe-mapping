@@ -1,19 +1,21 @@
 export class Business {
     constructor(business) {
-        this.name = business.CompanyName;
-        this.address = [
-            business.BusinessAddress1,
-            business.BusinessAddress2,
-            business.BusinessAddress3];
-        this.owner = business.ContactName;
-        this.email = business.BusinessEMail;
-        this.phone = business.BusinessPhone;
+        let info = business.info;
 
-        if (business.LsdbeOptions){
-            this.labels = business.LsdbeOptions.replace(/\s/g,'').split(',');
-        }
-        
-        this.businessNumber = business.LsdbeNumber;
+        this.name = info.CompanyName;
+        this.address = info.BusinessAddress1;
+        this.owner = info.PrincipalOwner;
+        this.contact = info.ContactName
+        this.email = info.BusinessEMail;
+        this.phone = info.BusinessPhone;
+        this.website = info.BusinessWebsite;
+        this.description = info.Description;
+        this.dateEstablished = info.DateEstablished;
+        this.ward = info.Ward;
+        this.points = info.RefPoints.replace('/[\n\t]/g', "");
+
+        this.address = business.address;
+        this.types = business.types;
         this.coords = business.Coordinates;
     }
 }

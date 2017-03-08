@@ -76,14 +76,13 @@ class InfoWindow {
         this.business = business;
         this.content = `
             <div class="infowindow">
-                <h3>${this.business.CompanyName}</h3>           
-                <p>${this.business.BusinessPhone}</p>
-                <p>${this.business.ContactName}</p>
-                <p>${this.business.BusinessEMail}</p>
+                <h3>${this.business.info.CompanyName}</h3>           
+                <p>${this.business.info.BusinessPhone}</p>
+                <p>${this.business.info.ContactName}</p>
+                <p>${this.business.info.BusinessEMail}</p>
+                <a target="_blank" href="http://${this.business.info.BusinessWebsite}">${this.business.info.BusinessWebsite}</a>
                 <p>
-                    <small>${this.business.BusinessAddress1}, </small>
-                    <small>${this.business.BusinessAddress2} </small>
-                    <small>${this.business.BusinessAddress3}</small>
+                    <small>${this.business.info.BusinessAddress1}, </small>
                 </p>
             </div>
         `
@@ -198,20 +197,22 @@ class Marker {
 "use strict";
 class Business {
     constructor(business) {
-        this.name = business.CompanyName;
-        this.address = [
-            business.BusinessAddress1,
-            business.BusinessAddress2,
-            business.BusinessAddress3];
-        this.owner = business.ContactName;
-        this.email = business.BusinessEMail;
-        this.phone = business.BusinessPhone;
+        let info = business.info;
 
-        if (business.LsdbeOptions){
-            this.labels = business.LsdbeOptions.replace(/\s/g,'').split(',');
-        }
-        
-        this.businessNumber = business.LsdbeNumber;
+        this.name = info.CompanyName;
+        this.address = info.BusinessAddress1;
+        this.owner = info.PrincipalOwner;
+        this.contact = info.ContactName
+        this.email = info.BusinessEMail;
+        this.phone = info.BusinessPhone;
+        this.website = info.BusinessWebsite;
+        this.description = info.Description;
+        this.dateEstablished = info.DateEstablished;
+        this.ward = info.Ward;
+        this.points = info.RefPoints.replace('/[\n\t]/g', "");
+
+        this.address = business.address;
+        this.types = business.types;
         this.coords = business.Coordinates;
     }
 }
@@ -256,7 +257,7 @@ function init(){
     });
     
     // Place Markers
-    $.get('data/data_fix.json').then(businesses => {
+    $.get('data/data_new.json').then(businesses => {
         // businesses is a json object of containing the data of each business
         
         let Businesses = [];

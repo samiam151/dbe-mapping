@@ -26,10 +26,10 @@ def break_tables(source = None):
     tables = get_tables(html)[:]
     
     for table, index in tables:
-        tds = table.find_all('td')
+        tds = table.find_all('')
         
         for td, idx in tds:
-            console.log(td)
+            
             children = td.childern()
 
     print(" ==> Number of total businesses: " + str(len(tables) / 2))

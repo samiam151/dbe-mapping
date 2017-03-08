@@ -2,7 +2,11 @@ var fs = require('fs');
 var cheerio = require('cheerio');
 var Geocoder = require('node-geocoder');
 
-var geocoder = Geocoder({provider: 'google'});
+// var googlemaps = require('@google/maps').createClient({
+//   key: 'AIzaSyC-MUe6SUZKtBb-rCXYimGzNA_BZdKsArY'
+// });
+
+var full_businesses = [];
 
 fs.readFile("./python/actual_data.html", (err, file) => {
     if (err) console.log(err)
@@ -93,20 +97,49 @@ fs.readFile("./python/actual_data.html", (err, file) => {
         }        
     })
 
-    // Geocode the addresses
-    businesses = businesses.map((business, index) => {
-        once(index, () => { console.log(business.info[4]['BusinessAddress1']) })
 
-        geocoder.geocode(business.info[4]['BusinessAddress1'], (err, res) => {
-            console.log(res)
-            business['coords'] = res || {};
-        })
+    // Filter out for DBE's
+    businesses = businesses.filter(business => {
+        return business.info.RefPoints.includes("DBE");
+    })
+
+    // Geocode the addresses
+    businesses = businesses.map((business, index) => {        
+        let address1 = business.info['BusinessAddress1'].split(",")[0],
+            address2 = business.info['BusinessAddress1'].split(",")[1],
+            address3 = business.info['BusinessAddress1'].split(",")[3]
+        
+        business['address'] = {}
+        business['address']['firstLine'] = address1
+        business['address']['secondLine'] = address2
+        business['address']['thirdLine'] = address3
+
+        // geocoder.geocode(business.info['BusinessAddress1'], (err, res) => {
+        //     if (err) console.log(err);
+
+        //     console.log(business.info['BusinessAddress1'], res)
+        // })
+
+        // let address = business.info['BusinessAddress1']
+        // googlemaps.geocode({
+        //     address: address
+        // }, (err, res) => {
+        //     if (err) {
+        //         console.log(err);
+        //     }
+        //     // console.log(address)
+        //     // console.log(res)
+        // })
+
+        console.log(`${businesses.length - index} left...`)
         return business
     })
 
-    console.log(businesses[35])
-    console.log(businesses[35].info.ContactName)
+    data = JSON.stringify(businesses, null, '\t')
+    fs.writeFile("./data/data_node.json", data, (err) => err)
 })
+
+
 
 function everyFour(i){
     i++

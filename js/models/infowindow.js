@@ -3,14 +3,13 @@ export class InfoWindow {
         this.business = business;
         this.content = `
             <div class="infowindow">
-                <h3>${this.business.CompanyName}</h3>           
-                <p>${this.business.BusinessPhone}</p>
-                <p>${this.business.ContactName}</p>
-                <p>${this.business.BusinessEMail}</p>
+                <h3>${this.business.info.CompanyName}</h3>           
+                <p>${this.business.info.BusinessPhone}</p>
+                <p>${this.business.info.ContactName}</p>
+                <p>${this.business.info.BusinessEMail}</p>
+                <a target="_blank" href="http://${this.business.info.BusinessWebsite}">${this.business.info.BusinessWebsite}</a>
                 <p>
-                    <small>${this.business.BusinessAddress1}, </small>
-                    <small>${this.business.BusinessAddress2} </small>
-                    <small>${this.business.BusinessAddress3}</small>
+                    <small>${this.business.info.BusinessAddress1}, </small>
                 </p>
             </div>
         `
