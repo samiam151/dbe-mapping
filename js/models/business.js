@@ -18,4 +18,9 @@ export class Business {
         this.types = business.types;
         this.coords = business.Coordinates;
     }
+
+    toString() {
+        return `${this.name}, by ${this.owner}`;
+    }
+
 }
