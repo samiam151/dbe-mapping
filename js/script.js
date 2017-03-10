@@ -1,12 +1,15 @@
 import { Business } from "./models/business";
-import { test } from "./showBusiness";
+import { showBusinesses } from "./showBusiness";
 import { map } from "./map";
-
+import { DataService } from "./services/dataService";
+// import { Business } from "./models/business";
 
 let url = window.location.pathname;
 
 if (url.includes('businesses.html')){
-    test();
+    DataService.getData().then(data => {
+        showBusinesses(data)
+    })
 }
 
 if (url.includes("index.html") || url === '/' || url === "/black-data/"){

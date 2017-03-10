@@ -1,7 +1,8 @@
-export static class DataService {
+export class DataService {
     constructor() {}
 
     static getData() {
-        return $.get('data/data_fix.json');
+        console.log('Getting...')
+        return $.get('data/data_new.json');
     }
 }

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -72,9 +72,9 @@
 
 "use strict";
 class Business {
-    constructor(business) {
+    constructor(business) {        
         let info = business.info;
-
+        
         this.name = info.CompanyName;
         this.address = info.BusinessAddress1;
         this.owner = info.PrincipalOwner;
@@ -91,6 +91,9 @@ class Business {
         this.types = business.types;
         this.coords = business.Coordinates;
     }
+    static count(){
+        
+    }
 
     toString() {
         return `${this.name}, by ${this.owner}`;
@@ -102,6 +105,22 @@ class Business {
 
 /***/ }),
 /* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class DataService {
+    constructor() {}
+
+    static getData() {
+        console.log('Getting...')
+        return $.get('data/data_new.json');
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = DataService;
+
+
+/***/ }),
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -139,11 +158,11 @@ class InfoWindow {
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__marker__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__marker__ = __webpack_require__(4);
 
 
 class DataMap {
@@ -184,12 +203,12 @@ class DataMap {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__map__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__infowindow__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__map__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__infowindow__ = __webpack_require__(2);
 
 
 
@@ -225,15 +244,17 @@ class Marker {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__models_map__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_marker__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_infowindow__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__models_map__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_marker__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_infowindow__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_business__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_dataService__ = __webpack_require__(1);
 /* harmony export (immutable) */ __webpack_exports__["a"] = map;
+
 
 
 
@@ -252,31 +273,14 @@ function map(){
         });
         
         // Place Markers
-        $.get('data/data_new.json').then(businesses => {
-            // businesses is a json object of containing the data of each business
-            
-            let Businesses = [];
-
-            // each business is an object  
+        __WEBPACK_IMPORTED_MODULE_4__services_dataService__["a" /* DataService */].getData().then(businesses => {
             businesses.forEach((business, index) => {
-                Businesses.push(new __WEBPACK_IMPORTED_MODULE_3__models_business__["a" /* Business */](business));
                 map.addMarker(business);
             }); 
         });
-
     }
 
     return init
-}
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = test;
-function test(){
-    console.log('test');
 }
 
 /***/ }),
@@ -284,19 +288,42 @@ function test(){
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__models_business__ = __webpack_require__(0);
+/* harmony export (immutable) */ __webpack_exports__["a"] = showBusinesses;
+
+
+function showBusinesses(data){
+    let businesses = data.map(datum => new __WEBPACK_IMPORTED_MODULE_0__models_business__["a" /* Business */](datum)),
+        numBusinesses = businesses.length
+
+    businesses.slice(0,25).forEach(n => {
+        console.log(n)
+    })
+    console.log(numBusinesses)
+}
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__models_business__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__showBusiness__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__map__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__showBusiness__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__map__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_dataService__ = __webpack_require__(1);
 
 
 
 
+// import { Business } from "./models/business";
 
 let url = window.location.pathname;
 
 if (url.includes('businesses.html')){
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__showBusiness__["a" /* test */])();
+    __WEBPACK_IMPORTED_MODULE_3__services_dataService__["a" /* DataService */].getData().then(data => {
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__showBusiness__["a" /* showBusinesses */])(data)
+    })
 }
 
 if (url.includes("index.html") || url === '/' || url === "/black-data/"){

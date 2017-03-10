@@ -1,7 +1,7 @@
 export class Business {
-    constructor(business) {
+    constructor(business) {        
         let info = business.info;
-
+        
         this.name = info.CompanyName;
         this.address = info.BusinessAddress1;
         this.owner = info.PrincipalOwner;
@@ -17,6 +17,9 @@ export class Business {
         this.address = business.address;
         this.types = business.types;
         this.coords = business.Coordinates;
+    }
+    static count(){
+        
     }
 
     toString() {

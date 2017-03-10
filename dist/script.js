@@ -6,10 +6,16 @@ var _showBusiness = require("./showBusiness");
 
 var _map = require("./map");
 
+var _dataService = require("./services/dataService");
+
+// import { Business } from "./models/business";
+
 var url = window.location.pathname;
 
 if (url.includes('businesses.html')) {
-    (0, _showBusiness.test)();
+    _dataService.DataService.getData().then(function (data) {
+        (0, _showBusiness.showBusinesses)(data);
+    });
 }
 
 if (url.includes("index.html") || url === '/' || url === "/black-data/") {
